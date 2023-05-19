@@ -5,7 +5,7 @@ Redmine::Plugin.register :drag_and_drop do
   name 'Drag And Drop plugin'
   author 'Lucas R Schatz'
   description 'This is a plugin for Redmine, allowing the user to drag an issue inside another issue, changing its parent id'
-  version '0.0.1'
+  version '0.0.2'
   url 'https://github.com/arvanus/redmine_drag_and_drop'
   author_url 'https://github.com/arvanus'
 end

@@ -53,7 +53,8 @@ function showActionOptions(callback, event) {
   var options = {
     updateParent: 'Atualizar o pai',
     addSuccessor: 'Adicionar como sucessor',
-    addReference: 'Adicionar como referência'
+    addReference: 'Adicionar como referência',
+    cancelar: 'Cancelar'
   };
 
   // Adicione as opções de menu ao elemento
@@ -75,7 +76,21 @@ function showActionOptions(callback, event) {
     });
   menudiv.append(menu);
   // Adicione o menu ao corpo do documento
+
   $('body').append(menudiv);
+
+  // Adicionar um pequeno atraso antes de adicionar o ouvinte de eventos para o clique fora do menu
+  setTimeout(function() {
+    $(document).on('click', function(e) {
+      var target = $(e.target);
+
+      // Verificar se o clique ocorre fora do menu e não em um item de menu
+      if (!target.closest('#context-menu').length) {
+        menudiv.remove(); // Remover o menu do DOM
+      }
+    });
+  }, 100);
+
 }
 
 
