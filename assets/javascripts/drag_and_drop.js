@@ -79,16 +79,18 @@ function showActionOptions(callback, event) {
 
   $('body').append(menudiv);
 
-  // Adicionar um pequeno atraso antes de adicionar o ouvinte de eventos para o clique fora do menu
-  setTimeout(function() {
-    $(document).on('click', function(e) {
-      var target = $(e.target);
+ var outsideMenuClick = function(e) {
+    var target = $(e.target);
 
-      // Verificar se o clique ocorre fora do menu e não em um item de menu
-      if (!target.closest('#context-menu').length) {
-        menudiv.remove(); // Remover o menu do DOM
-      }
-    });
+    if (!target.closest('#context-menu').length) {
+      menudiv.remove();
+	  //Boa prática para evitar peso adicional com o tempo
+      $(document).off('click', outsideMenuClick);
+    }
+  };
+  //adicionei um pequeno atraso, pois senão o menu já era removido imediatamente
+  setTimeout(function() {
+    $(document).on('click', outsideMenuClick);
   }, 100);
 
 }
