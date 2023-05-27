@@ -1,5 +1,5 @@
 $(function() {
-  $(".draggable, .issue").draggable({
+  $(".draggable, tr.issue, .gantt_subjects .issue-subject").draggable({
     revert: "invalid",
     containment: "document",
     helper: "clone",
@@ -7,20 +7,28 @@ $(function() {
     }
   });
 
-  $(".droppable, .issue").droppable({
-    accept: ".draggable, .issue",
+  $(".droppable, tr.issue, .gantt_subjects .issue-subject").droppable({
+    accept: ".draggable, .issue,  .gantt_subjects .issue-subject",
     drop: function(event, ui) {
       var draggableTask = ui.draggable;
       var droppedOnTask = $(this);
-//asdasdasdasd
       // Obtenha o ID das tarefas
+      //Meu componente custom
       var draggableTaskId = draggableTask.attr("data-task-id");
       var droppedOnTaskId = droppedOnTask.attr("data-task-id");
+      //aba das issues
       if (draggableTaskId === undefined ) {
         draggableTaskId = draggableTask.find('.checkbox input[name="ids[]"]').val();
       }
       if (droppedOnTaskId === undefined ) {
         droppedOnTaskId = droppedOnTask.find('.checkbox input[name="ids[]"]').val();
+      }
+      //Aba do gantt
+      if (draggableTaskId === undefined ) {
+        draggableTaskId = draggableTask.attr("id").split("-").pop();
+      }
+      if (droppedOnTaskId === undefined ) {
+        droppedOnTaskId = droppedOnTask.attr("id").split("-").pop();
       }
       // Realize a lógica de atualização do parent da tarefa arrastada
       // para ser a tarefa sombreada (droppedOnTask)
