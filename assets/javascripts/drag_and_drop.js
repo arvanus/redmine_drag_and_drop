@@ -59,10 +59,10 @@ function showActionOptions(callback, event) {
   var menudiv = $('<div id="context-menu" class="reverse-y" >');
   var menu = $('<ul>');
   var options = {
-    updateParent: 'Atualizar o pai',
-    addSuccessor: 'Adicionar como sucessor',
-    addReference: 'Adicionar como referência',
-    cancelar: 'Cancelar'
+    updateParent: 'Update parent to',
+    addSuccessor: 'Add as successor',
+    addReference: 'Add as reference',
+    cancelar: 'Cancel'
   };
 
   // Adicione as opções de menu ao elemento
