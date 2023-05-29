@@ -107,7 +107,7 @@ function showActionOptions(callback, event) {
 function updateParent(issueId, targetId) {
   // Lógica para atualizar o pai da tarefa arrastada
       $.ajax({
-        url: "/tasks/" + issueId + "/update_parent",
+        url: "/issues/" + issueId + "/update_parent",
         type: "PUT",
         data: { parent_id: targetId },
         success: function(response) {
