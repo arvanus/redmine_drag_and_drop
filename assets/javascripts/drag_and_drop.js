@@ -59,13 +59,27 @@ function showActionOptions(callback, event) {
   var menudiv = $('<div id="context-menu" class="reverse-y" >');
   var menu = $('<ul>');
 
-  // Use translations from backend or fallback to English
-  var t = window.DragAndDropTranslations || {
-    updateParent: 'Update parent to',
-    addSuccessor: 'Add as successor',
-    addReference: 'Add as reference',
-    cancel: 'Cancel'
-  };
+  // Use translations from backend (CSP compliant) or fallback to English
+  var t;
+  var translationsEl = document.getElementById('drag-and-drop-translations');
+  if (translationsEl && translationsEl.dataset.translations) {
+    try {
+      t = JSON.parse(translationsEl.dataset.translations);
+    } catch(e) {
+      console.error('Failed to parse drag and drop translations:', e);
+      t = null;
+    }
+  }
+
+  // Fallback to English if translations not available
+  if (!t) {
+    t = {
+      updateParent: 'Update parent to',
+      addSuccessor: 'Add as successor',
+      addReference: 'Add as reference',
+      cancel: 'Cancel'
+    };
+  }
 
   var options = {
     updateParent: t.updateParent,
