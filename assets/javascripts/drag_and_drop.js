@@ -58,11 +58,20 @@ function showActionOptions(callback, event) {
   // Crie o elemento de menu
   var menudiv = $('<div id="context-menu" class="reverse-y" >');
   var menu = $('<ul>');
-  var options = {
+
+  // Use translations from backend or fallback to English
+  var t = window.DragAndDropTranslations || {
     updateParent: 'Update parent to',
     addSuccessor: 'Add as successor',
     addReference: 'Add as reference',
-    cancelar: 'Cancel'
+    cancel: 'Cancel'
+  };
+
+  var options = {
+    updateParent: t.updateParent,
+    addSuccessor: t.addSuccessor,
+    addReference: t.addReference,
+    cancelar: t.cancel
   };
 
   // Adicione as opções de menu ao elemento

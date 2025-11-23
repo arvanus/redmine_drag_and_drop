@@ -1,0 +1,7 @@
+# Portuguese (Brazil) strings go here for Rails i18n
+pt-BR:
+  drag_and_drop:
+    update_parent: "Atualizar pai para"
+    add_successor: "Adicionar como sucessor"
+    add_reference: "Adicionar como referência"
+    cancel: "Cancelar"

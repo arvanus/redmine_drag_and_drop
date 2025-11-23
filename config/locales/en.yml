@@ -1,3 +1,7 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  drag_and_drop:
+    update_parent: "Update parent to"
+    add_successor: "Add as successor"
+    add_reference: "Add as reference"
+    cancel: "Cancel"
