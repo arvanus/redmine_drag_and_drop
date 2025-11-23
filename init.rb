@@ -8,4 +8,7 @@ Redmine::Plugin.register :redmine_drag_and_drop do
   version '0.1.0'
   url 'https://github.com/arvanus/redmine_drag_and_drop'
   author_url 'https://github.com/arvanus'
+
+  # Compatible with Redmine 5.x (Rails 6.1) and Redmine 6.x (Rails 7.2)
+  requires_redmine version_or_higher: '5.0'
 end

@@ -1,0 +1,57 @@
+/* Drag and Drop Context Menu - Redmine-style */
+#drag-drop-context-menu {
+  position: absolute;
+  z-index: 40;
+  font-size: 0.9em;
+}
+
+#drag-drop-context-menu ul {
+  width: 150px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 2px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  list-style: none;
+}
+
+#drag-drop-context-menu li {
+  position: relative;
+  display: flex;
+  padding: 1px;
+  border: 1px solid #fff;
+  margin: 0;
+}
+
+#drag-drop-context-menu a {
+  text-decoration: none;
+  padding: 2px 8px;
+  display: block;
+  width: 100%;
+  color: inherit;
+}
+
+#drag-drop-context-menu li:hover {
+  border: 1px solid #628db6;
+  background-color: #e4f1fb;
+}
+
+#drag-drop-context-menu a:hover {
+  color: #169;
+}
+
+/* Icon support */
+#drag-drop-context-menu a.icon {
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+/* Reverse positioning classes for viewport boundaries */
+#drag-drop-context-menu.reverse-x {
+  /* Menu is reversed horizontally */
+}
+
+#drag-drop-context-menu.reverse-y {
+  /* Menu is reversed vertically */
+}

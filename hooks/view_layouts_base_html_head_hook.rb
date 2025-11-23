@@ -8,7 +8,9 @@ class DragAndDropViewLayoutsBaseHtmlHeadHook < Redmine::Hook::ViewListener
     }
 
     # Use data attribute to pass translations - CSP compliant for Rails 7
-    tag.script(
+    # Using content_tag for backward compatibility with Redmine 5 (Rails 6.1)
+    stylesheet_link_tag('drag_and_drop', plugin: 'redmine_drag_and_drop') +
+    content_tag(:script, '',
       type: 'application/json',
       id: 'drag-and-drop-translations',
       data: { translations: translations.to_json }

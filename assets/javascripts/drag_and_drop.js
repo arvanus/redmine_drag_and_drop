@@ -55,11 +55,10 @@ $(function() {
 });
 
 function showActionOptions(callback, event) {
-  // Crie o elemento de menu
-  var menudiv = $('<div id="context-menu" class="reverse-y" >');
-  var menu = $('<ul>');
+  // Remove any existing context menu
+  $('#drag-drop-context-menu').remove();
 
-  // Use translations from backend (CSP compliant) or fallback to English
+  // Get translations from backend (CSP compliant) or fallback to English
   var t;
   var translationsEl = document.getElementById('drag-and-drop-translations');
   if (translationsEl && translationsEl.dataset.translations) {
@@ -81,49 +80,86 @@ function showActionOptions(callback, event) {
     };
   }
 
-  var options = {
-    updateParent: t.updateParent,
-    addSuccessor: t.addSuccessor,
-    addReference: t.addReference,
-    cancelar: t.cancel
-  };
+  // Create menu using Redmine's context menu structure
+  var menudiv = $('<div id="drag-drop-context-menu">');
+  var menu = $('<ul>');
 
-  // Adicione as opções de menu ao elemento
-  $.each(options, function(key, value) {
-    var menuItem = $('<li>').text(value);
+  var options = [
+    { key: 'updateParent', text: t.updateParent, icon: 'icon-link' },
+    { key: 'addSuccessor', text: t.addSuccessor, icon: 'icon-arrow-right' },
+    { key: 'addReference', text: t.addReference, icon: 'icon-link-break' },
+    { key: 'cancelar', text: t.cancel, icon: 'icon-cancel' }
+  ];
 
-    menuItem.on('click', function() {
-      callback(key);
+  // Build menu items with Redmine-style structure
+  $.each(options, function(index, option) {
+    var menuItem = $('<li>');
+    var menuLink = $('<a href="#">')
+      .addClass(option.icon)
+      .text(option.text);
+
+    menuLink.on('click', function(e) {
+      e.preventDefault();
+      callback(option.key);
       menudiv.remove();
     });
 
+    menuItem.append(menuLink);
     menu.append(menuItem);
   });
 
-  // Posicione o menu próximo ao cursor do mouse
-    menudiv.css({
-      top: event.pageY + 'px',
-      left: event.pageX + 'px'
-    });
   menudiv.append(menu);
-  // Adicione o menu ao corpo do documento
 
-  $('body').append(menudiv);
+  // Position menu at cursor location
+  var menuX = event.pageX;
+  var menuY = event.pageY;
 
- var outsideMenuClick = function(e) {
+  // Adjust position to keep menu within viewport (Redmine-style)
+  var $window = $(window);
+  var windowWidth = $window.width();
+  var windowHeight = $window.height();
+  var scrollLeft = $window.scrollLeft();
+  var scrollTop = $window.scrollTop();
+
+  menudiv.css({
+    position: 'absolute',
+    top: menuY + 'px',
+    left: menuX + 'px',
+    display: 'block'
+  });
+
+  // Append to content div (Redmine standard)
+  var $content = $('#content');
+  if ($content.length) {
+    $content.append(menudiv);
+  } else {
+    $('body').append(menudiv);
+  }
+
+  // Adjust position if menu goes off-screen (reverse-x, reverse-y classes)
+  var menuWidth = menudiv.outerWidth();
+  var menuHeight = menudiv.outerHeight();
+
+  if (menuX + menuWidth > scrollLeft + windowWidth) {
+    menudiv.css('left', (menuX - menuWidth) + 'px').addClass('reverse-x');
+  }
+  if (menuY + menuHeight > scrollTop + windowHeight) {
+    menudiv.css('top', (menuY - menuHeight) + 'px').addClass('reverse-y');
+  }
+
+  // Close menu on outside click
+  var outsideMenuClick = function(e) {
     var target = $(e.target);
-
-    if (!target.closest('#context-menu').length) {
+    if (!target.closest('#drag-drop-context-menu').length) {
       menudiv.remove();
-	  //Boa prática para evitar peso adicional com o tempo
       $(document).off('click', outsideMenuClick);
     }
   };
-  //adicionei um pequeno atraso, pois senão o menu já era removido imediatamente
+
+  // Small delay to prevent immediate closure
   setTimeout(function() {
     $(document).on('click', outsideMenuClick);
   }, 100);
-
 }
 
 
