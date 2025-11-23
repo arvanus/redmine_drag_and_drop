@@ -40,11 +40,20 @@
   color: #169;
 }
 
-/* Icon support */
-#drag-drop-context-menu a.icon {
+/* Icon support - override Redmine's default icon styles */
+#drag-drop-context-menu a[class*="icon-"] {
   background-position: 0% 50%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px;
   padding-left: 20px;
+}
+
+/* Specific icon overrides to prevent repetition */
+#drag-drop-context-menu a.icon-link,
+#drag-drop-context-menu a.icon-arrow-right,
+#drag-drop-context-menu a.icon-link-break,
+#drag-drop-context-menu a.icon-cancel {
+  background-repeat: no-repeat !important;
 }
 
 /* Reverse positioning classes for viewport boundaries */
